@@ -6,7 +6,7 @@ Functions that are not test or feature specific.
 import os
 import pathlib
 import pdb
-
+import platform
 from selenium import webdriver
 from BDDCommon.CommonConfigs import urlconfig
 import time
@@ -25,7 +25,6 @@ def go_to(context, location, **kwargs):
     :param kwargs:
     :return:
     """
-
     url = urlconfig.URLCONFIG.get(location)
 
     if not location.startswith('http' or 'https'):
@@ -34,34 +33,93 @@ def go_to(context, location, **kwargs):
         url = base_url
     browser = context.config.userdata.get('browser')
 
-    if not browser:
-        browser = 'chrome'
-    if browser.lower() == 'chrome':
-        chromedriver_path = os.path.join(os.getcwd(), 'Drivers', 'chromedriver.exe')
-        # create instance of Chrome driver the browser type is not specified
-        context.driver = webdriver.Chrome(executable_path=chromedriver_path)
-        # context.driver = webdriver.Chrome(ChromeDriverManager().install())
-    elif browser.lower() == 'headlesschrome':
-        chromedriver_path = os.path.join(os.getcwd(), 'Drivers', 'chromedriver')
-        myOptions = webdriver.ChromeOptions()
-        myOptions.add_argument('--headless')
-        context.driver = webdriver.Chrome(executable_path=chromedriver_path, options=myOptions)
-        # context.driver = webdriver.Chrome(ChromeDriverManager().install(), options=myOptions)
-    elif browser.lower() in ('ff', 'firefox'):
-        geckodriverdriver_path = os.path.join(os.getcwd(), 'Drivers', 'geckodriver.exe')
-        myOptions = webdriver.FirefoxOptions()
-        myOptions.headless = True
-        # create instance of the Firefox driver
-        context.driver = webdriver.Firefox(executable_path=geckodriverdriver_path, options=myOptions)
-    elif browser.lower() in ('mi_ed', 'microsoft Edge'):
-        # create instance of the microsoft Edge driver
-        context.driver = webdriver.Edge(EdgeChromiumDriverManager().install())
-    elif browser.lower() in ('ff', 'opera'):
-        # create instance of the Opera driver
-        context.driver = webdriver.Opera(executable_path=OperaDriverManager().install())
+    if platform.system() == 'Windows':
+        if not browser:
+            browser = 'chrome'
+        if browser.lower() == 'chrome':
+            chromedriver_path = os.path.join(os.getcwd(), 'webdrivers', 'windows', 'chromedriver.exe')
+            # create instance of Chrome driver the browser type is not specified
+            context.driver = webdriver.Chrome(executable_path=chromedriver_path)
+            # context.driver = webdriver.Chrome(ChromeDriverManager().install())
+        elif browser.lower() == 'headlesschrome':
+            chromedriver_path = os.path.join(os.getcwd(), 'webdrivers', 'windows', 'chromedriver')
+            myOptions = webdriver.ChromeOptions()
+            myOptions.add_argument('--headless')
+            context.driver = webdriver.Chrome(executable_path=chromedriver_path, options=myOptions)
+            # context.driver = webdriver.Chrome(ChromeDriverManager().install(), options=myOptions)
+        elif browser.lower() in ('ff', 'firefox'):
+            geckodriverdriver_path = os.path.join(os.getcwd(), 'webdrivers', 'windows', 'geckodriver')
+            myOptions = webdriver.FirefoxOptions()
+            myOptions.headless = True
+            # create instance of the Firefox driver
+            context.driver = webdriver.Firefox(executable_path=geckodriverdriver_path, options=myOptions)
+        elif browser.lower() in ('mi_ed', 'microsoft Edge'):
+            # create instance of the microsoft Edge driver
+            context.driver = webdriver.Edge(EdgeChromiumDriverManager().install())
+        elif browser.lower() in ('op', 'opera'):
+            # create instance of the Opera driver
+            context.driver = webdriver.Opera(executable_path=OperaDriverManager().install())
 
+        else:
+            raise Exception("The browser type '{}' is not supported".format(context))
+    elif platform.system() == 'Darwin':
+        if not browser:
+            browser = 'chrome'
+        if browser.lower() == 'chrome':
+            chromedriver_path = os.path.join(os.getcwd(), 'webdrivers', 'mac', 'chromedriver.exe')
+            # create instance of Chrome driver the browser type is not specified
+            context.driver = webdriver.Chrome(executable_path=chromedriver_path)
+            # context.driver = webdriver.Chrome(ChromeDriverManager().install())
+        elif browser.lower() == 'headlesschrome':
+            chromedriver_path = os.path.join(os.getcwd(), 'webdrivers', 'mac', 'chromedriver')
+            myOptions = webdriver.ChromeOptions()
+            myOptions.add_argument('--headless')
+            context.driver = webdriver.Chrome(executable_path=chromedriver_path, options=myOptions)
+            # context.driver = webdriver.Chrome(ChromeDriverManager().install(), options=myOptions)
+        elif browser.lower() in ('ff', 'firefox'):
+            geckodriverdriver_path = os.path.join(os.getcwd(), 'webdrivers', 'mac', 'geckodriver')
+            myOptions = webdriver.FirefoxOptions()
+            myOptions.headless = True
+            # create instance of the Firefox driver
+            context.driver = webdriver.Firefox(executable_path=geckodriverdriver_path, options=myOptions)
+        elif browser.lower() in ('mi_ed', 'microsoft Edge'):
+            # create instance of the microsoft Edge driver
+            context.driver = webdriver.Edge(EdgeChromiumDriverManager().install())
+        elif browser.lower() in ('op', 'opera'):
+            # create instance of the Opera driver
+            context.driver = webdriver.Opera(executable_path=OperaDriverManager().install())
+        else:
+            raise Exception("The browser type '{}' is not supported".format(context))
+    elif platform.system() == 'Linux':
+        if not browser:
+            browser = 'chrome'
+        if browser.lower() == 'chrome':
+            chromedriver_path = os.path.join(os.getcwd(), 'webdrivers', 'linux', 'chromedriver.exe')
+            # create instance of Chrome driver the browser type is not specified
+            context.driver = webdriver.Chrome(executable_path=chromedriver_path)
+            # context.driver = webdriver.Chrome(ChromeDriverManager().install())
+        elif browser.lower() == 'headlesschrome':
+            chromedriver_path = os.path.join(os.getcwd(), 'webdrivers', 'linux', 'chromedriver')
+            myOptions = webdriver.ChromeOptions()
+            myOptions.add_argument('--headless')
+            context.driver = webdriver.Chrome(executable_path=chromedriver_path, options=myOptions)
+            # context.driver = webdriver.Chrome(ChromeDriverManager().install(), options=myOptions)
+        elif browser.lower() in ('ff', 'firefox'):
+            geckodriverdriver_path = os.path.join(os.getcwd(), 'webdrivers', 'linux', 'geckodriver')
+            myOptions = webdriver.FirefoxOptions()
+            myOptions.headless = True
+            # create instance of the Firefox driver
+            context.driver = webdriver.Firefox(executable_path=geckodriverdriver_path, options=myOptions)
+        elif browser.lower() in ('mi_ed', 'microsoft Edge'):
+            # create instance of the microsoft Edge driver
+            context.driver = webdriver.Edge(EdgeChromiumDriverManager().install())
+        elif browser.lower() in ('op', 'opera'):
+            # create instance of the Opera driver
+            context.driver = webdriver.Opera(executable_path=OperaDriverManager().install())
+        else:
+            raise Exception("The browser type '{}' is not supported".format(context))
     else:
-        raise Exception("The browser type '{}' is not supported".format(context))
+        raise Exception("Unknown platform. Unable to add webdrivers to path.")
 
     # adding implicit wait
     wait = int(kwargs['implicitly_wait']) if 'implicitly_wait' in kwargs.keys() else 15

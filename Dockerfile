@@ -30,5 +30,7 @@ RUN apt-get update                             \
 COPY BDDCommon /automation/BDDCommon
 COPY tests /automation/tests
 COPY ./setup.py /automation
+COPY ./requirements.txt /automation
 
 WORKDIR /automation
+RUN pip install -r requirements.txt

@@ -29,6 +29,7 @@ setup(name='Task2',
             "requests==2.26.0",
             "python-dotenv==0.20.0",
             "pymysql==0.9.3",
-            "webdriver_manager"
+            "webdriver_manager==3.7.0",
+            "allure-behave~=2.9.45"
       ]
       )
